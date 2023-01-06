@@ -2,9 +2,40 @@ server:
   port: 80
 
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/basic?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+SystemConfig:
+  rsa-keypair:
+    # 加密方式
+    algorithm: RSA
+    # 初始化大小
+    key-size: 1024
+    # 公钥文件
+    public-key-file: C:\\Users\\DPH\\Desktop\\publicKey.txt
+    # 私钥文件
+    private-key-file: C:\\Users\\DPH\\Desktop\\privateKey.txt
+
+redis:
+  # Redis地址
+  host: localhost
+  # Redis端口
+  port: 6379
+  # Redis密码
+  password:
+  # Redis 指定库
+  database: 0
+  # Redis 链接超时时间(毫秒)
+  timeout: 180000
+  # Redis 线程池配置
+  lettuce:
+    pool:
+      # 连接池最大链接数（负数代表没有限制）
+      max-active: 32
+      # 最大阻塞时间（负数代表没有限制）
+      max-wait: 300ms
+      # 最大空闲链接
+      max-idle: 16
+      # 最小空闲链接
+      min-idle: 8
