@@ -39,3 +39,12 @@ redis:
       max-idle: 16
       # 最小空闲链接
       min-idle: 8
+
+# 上传路径
+file:
+  upload:
+    dir: D:/changlu/闲暇目录/upload/  # 文件上传磁盘路径
+  visit:
+    ip: 127.0.0.1   # 访问服务器ip地址
+    path: /images/   # 访问路径
+    protocol: http   # 请求协议

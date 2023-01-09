@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
-public class RedisConfiguration {
+public class RedisConfig {
 
     /*
      * 将数据序列化
