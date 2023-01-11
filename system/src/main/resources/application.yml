@@ -5,6 +5,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: net.sf.log4jdbc.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3306/basic?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: Dph1314258
 
 SystemConfig:
   rsa-keypair:
@@ -39,12 +44,3 @@ redis:
       max-idle: 16
       # 最小空闲链接
       min-idle: 8
-
-# 上传路径
-file:
-  upload:
-    dir: D:/changlu/闲暇目录/upload/  # 文件上传磁盘路径
-  visit:
-    ip: 127.0.0.1   # 访问服务器ip地址
-    path: /images/   # 访问路径
-    protocol: http   # 请求协议
