@@ -7,6 +7,9 @@ public enum ErrorEnum {
     //自定义系列
     USER_NAME_IS_NOT_NULL("10001","【参数校验】用户名不能为空"),
     PWD_IS_NOT_NULL("10002","【参数校验】密码不能为空"),
+    CAPTCHA_EXPIRED("10003","【参数校验】验证码已过期"),
+    CAPTCHA_WRONG("10004","【参数校验】验证码错误"),
+
 
     //400系列
     BAD_REQUEST("400","请求的数据格式不符!"),

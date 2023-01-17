@@ -11,16 +11,16 @@ spring:
     username: root
     password: Dph1314258
 
-SystemConfig:
-  rsa-keypair:
-    # 加密方式
-    algorithm: RSA
-    # 初始化大小
-    key-size: 1024
+rsa-keypair:
     # 公钥文件
-    public-key-file: C:\\Users\\DPH\\Desktop\\publicKey.txt
+  public-key-file: C:\\Users\\DPH\\Desktop\\publicKey.txt
     # 私钥文件
-    private-key-file: C:\\Users\\DPH\\Desktop\\privateKey.txt
+  private-key-file: C:\\Users\\DPH\\Desktop\\privateKey.txt
+  secret: (EMOK:)_$^11244^%$_(IS:)_@@++--(COOL:)_++++_.sds_(GUY:)
+
+token:
+  header: Authorization
+  expiration: 14400000
 
 redis:
   # Redis地址

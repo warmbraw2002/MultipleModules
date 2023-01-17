@@ -11,4 +11,7 @@ public interface OperationLogType {
     String WITHDRAW = "撤回";
  
     String DELETE = "删除";
+
+    String LOGIN = "登录";
+    String LOGOUT = "登出";
 }
