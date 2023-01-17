@@ -1,4 +1,4 @@
-package com.tiktok.service.impl;
+package com.tiktok.service;
 
 
 import com.tiktok.domain.SysLog;
