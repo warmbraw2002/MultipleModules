@@ -10,22 +10,20 @@ import com.tiktok.domain.User;
 import com.tiktok.service.JwtAuthService;
 import com.tiktok.utils.AgentUtil;
 import com.tiktok.utils.RedisUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * @author az
- * @since 2021-12-03
- */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户操作")
 public class UserController {
 
     @Resource
@@ -36,6 +34,7 @@ public class UserController {
 
     @PostMapping("/login/{code}")
     @Log(operModule = "用户操作-登录",operType = OperationLogType.LOGIN,operDesc = "用户登录")
+    @ApiOperation(value = "用户登录")
     public Result login(HttpServletRequest request, @RequestBody User user, @PathVariable String code) {
         String key = getCaptchaKey(request);
         String captcha = (String) redisUtil.get(key);
@@ -55,12 +54,17 @@ public class UserController {
     }
 
     @GetMapping("/username")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiOperation(value = "获取用户名")
+    @Log(operModule = "用户操作-获取用户名",operType = OperationLogType.QUERY,operDesc = "获取用户名")
     public String currentUserName(Principal principal) {
         return principal.getName();
     }
 
     @GetMapping("/logout")
     @Log(operModule = "用户操作-登出",operType = OperationLogType.LOGOUT,operDesc = "用户登出")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiOperation(value = "用户登出")
     public Result logout(HttpServletRequest request, Principal principal) {
         String token = request.getHeader("Authorization");
         String redisKey = principal.getName()+":token";
