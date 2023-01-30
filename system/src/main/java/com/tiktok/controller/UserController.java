@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @RestController
@@ -36,6 +37,7 @@ public class UserController {
     @Log(operModule = "用户操作-登录",operType = OperationLogType.LOGIN,operDesc = "用户登录")
     @ApiOperation(value = "用户登录")
     public Result login(HttpServletRequest request, @RequestBody User user, @PathVariable String code) {
+        HttpSession session = request.getSession();
         String key = getCaptchaKey(request);
         String captcha = (String) redisUtil.get(key);
         if (captcha == null) {
