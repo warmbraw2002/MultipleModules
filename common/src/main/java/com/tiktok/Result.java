@@ -34,6 +34,10 @@ public class Result<T> implements Serializable {
         return new Result<>(data);
     }
 
+    public static <T> Result<T> of(T data, String msg) {
+        return new Result<>(data, msg);
+    }
+
     public static <T> Result<T> of(String code, boolean flag) {
         return new Result<>(code, flag);
     }
@@ -58,6 +62,11 @@ public class Result<T> implements Serializable {
     private Result(String code, boolean flag) {
         this.code = code;
         this.flag = flag;
+    }
+
+    private Result(T data, String msg) {
+        this.data = data;
+        this.msg = msg;
     }
 
     private Result(String code, boolean flag, String msg) {

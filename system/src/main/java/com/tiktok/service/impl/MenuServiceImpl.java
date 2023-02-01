@@ -38,8 +38,10 @@ public class MenuServiceImpl implements MenuService {
         if (oldMenu == null) {
             return Result.error(ErrorEnum.NOT_FOUND);
         }
+
         ClassExamine.objectOverlap(menu, oldMenu);
-        return Result.of(menuMapper.updateMenu(oldMenu));
+
+        return Result.of(menuMapper.updateMenu(menu));
     }
 
     @Override
