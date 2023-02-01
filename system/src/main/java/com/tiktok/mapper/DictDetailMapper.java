@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface DictDetailMapper {
-    @SelectProvider(type = DictDetailMapper.class, method = "selectByIdSQL")
+    @SelectProvider(type = DictDetailProvider.class, method = "selectByIdSQL")
     @Results(id = "dictDetailMap", value = {
             @Result(property = "detailId", column = "detail_id"),
             @Result(property = "dictId", column = "dict_id"),
@@ -19,16 +19,16 @@ public interface DictDetailMapper {
     })
     DictDetail findDictDetailById(Long detailId);
 
-    @InsertProvider(type = DictDetailMapper.class, method = "insertSQL")
+    @InsertProvider(type = DictDetailProvider.class, method = "insertSQL")
     int insertDictDetail(DictDetail dictDetail);
 
-    @UpdateProvider(type = DictDetailMapper.class, method = "updateSQL")
+    @UpdateProvider(type = DictDetailProvider.class, method = "updateSQL")
     int updateDictDetail(DictDetail dictDetail);
 
-    @DeleteProvider(type = DictDetailMapper.class, method = "deleteByIdSQL")
+    @DeleteProvider(type = DictDetailProvider.class, method = "deleteByIdSQL")
     int deleteDictDetailById(Long detailId);
 
-    @SelectProvider(type = DictDetailMapper.class, method = "selectAllSQL")
+    @SelectProvider(type = DictDetailProvider.class, method = "selectAllSQL")
     @ResultMap("dictDetailMap")
     List<DictDetail> findAllDictDetail();
 }
