@@ -66,12 +66,12 @@ public class DeptController {
         return deptService.deleteDeptById(id);
     }
 
-    @GetMapping("/{pageSize}/{pageNum}")
+    @GetMapping("/{pageNum}/{pageSize}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Log(operModule = "部门管理",operType = "查询",operDesc = "分页查询部门")
     @ApiOperation(value = "分页查询部门")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
-        return deptService.getDeptList(pageSize, pageNum);
+        return deptService.getDeptList(pageNum, pageSize);
     }
 
     @GetMapping("/export")

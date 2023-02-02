@@ -12,5 +12,5 @@ public interface DictDetailService {
     Result<Boolean> insertDictDetail(DictDetail dictDetail);
     Result<Boolean> updateDictDetail(DictDetail dictDetail) throws Exception;
     Result<Boolean> deleteDictDetailById(Long deptId);
-    Result<PageVo> getDictDetailList(Integer pageSize, Integer pageNum);
+    Result<PageVo> getDictDetailList(Integer pageNum, Integer pageSize);
 }

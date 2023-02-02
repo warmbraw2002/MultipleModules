@@ -10,6 +10,7 @@ public enum ErrorEnum {
     CAPTCHA_EXPIRED("10003","【参数校验】验证码已过期"),
     CAPTCHA_WRONG("10004","【参数校验】验证码错误"),
     INVALID_FIELD("10005","【参数校验】字段不合法"),
+    DUPLICATE_KEY("10006","【参数校验】字段重复"),
 
 
     //400系列

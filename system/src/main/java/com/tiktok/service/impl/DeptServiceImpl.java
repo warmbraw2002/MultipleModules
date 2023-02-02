@@ -56,8 +56,8 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public Result<PageVo> getDeptList(Integer pageSize, Integer pageNum) {
-        PageVo pageVo = new PageVo(pageSize, pageNum);
+    public Result<PageVo> getDeptList(Integer pageNum, Integer pageSize) {
+        PageVo pageVo = new PageVo(pageNum, pageSize);
         PageUtil.startPage(pageVo);
         List<Dept> deptList = deptMapper.findAllDept();
         return Result.of(PageUtil.endPage(pageVo, deptList));

@@ -22,6 +22,7 @@ public interface MenuMapper {
     Menu findMenuById(Long menuId);
 
     @InsertProvider(type = MenuProvider.class, method = "insertSQL")
+    @Options(useGeneratedKeys = true, keyProperty = "menuId", keyColumn = "menu_id")
     int insertMenu(Menu menu);
 
     @UpdateProvider(type = MenuProvider.class, method = "updateSQL")

@@ -21,6 +21,7 @@ public interface DeptMapper {
     Dept findDeptById(Long deptId);
 
     @InsertProvider(type = DeptProvider.class, method = "insertSQL")
+    @Options(useGeneratedKeys = true, keyProperty = "deptId", keyColumn = "dept_id")
     int insertDept(Dept dept);
 
     @UpdateProvider(type = DeptProvider.class, method = "updateSQL")

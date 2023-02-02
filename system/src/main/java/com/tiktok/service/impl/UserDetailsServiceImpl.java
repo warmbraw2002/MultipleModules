@@ -2,6 +2,7 @@ package com.tiktok.service.impl;
 
 import com.tiktok.domain.JwtUser;
 import com.tiktok.domain.User;
+import com.tiktok.mapper.UserMapper;
 import com.tiktok.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userService.getUserByName(s);
+        User user = userMapper.findUserByName(s);
         if (user == null) {
             throw new RuntimeException("用户" + s + "不存在"); // 可使用断言，使代码更简洁优雅
         }

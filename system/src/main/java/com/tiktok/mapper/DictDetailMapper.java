@@ -20,6 +20,7 @@ public interface DictDetailMapper {
     DictDetail findDictDetailById(Long detailId);
 
     @InsertProvider(type = DictDetailProvider.class, method = "insertSQL")
+    @Options(useGeneratedKeys = true, keyProperty = "detailId", keyColumn = "detail_id")
     int insertDictDetail(DictDetail dictDetail);
 
     @UpdateProvider(type = DictDetailProvider.class, method = "updateSQL")

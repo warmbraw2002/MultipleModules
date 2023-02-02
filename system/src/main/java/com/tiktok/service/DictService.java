@@ -13,6 +13,6 @@ public interface DictService {
     Result<Boolean> insertDict(Dict dict);
     Result<Boolean> updateDict(Dict dict) throws Exception;
     Result<Boolean> deleteDictById(Long dictId);
-    Result<PageVo> getDictList(Integer pageSize, Integer pageNum);
+    Result<PageVo> getDictList(Integer pageNum, Integer pageSize);
     List<Dict> getDictList();
 }

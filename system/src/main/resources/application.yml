@@ -44,3 +44,6 @@ redis:
       max-idle: 16
       # 最小空闲链接
       min-idle: 8
+
+pagehelper:
+  reasonable: true

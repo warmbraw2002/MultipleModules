@@ -67,12 +67,12 @@ public class DictController {
         return dictService.deleteDictById(id);
     }
 
-    @GetMapping("/{pageSize}/{pageNum}")
+    @GetMapping("/{pageNum}/{pageSize}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Log(operModule = "字典管理",operType = "查询",operDesc = "分页查询字典")
     @ApiOperation(value = "分页查询字典")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
-        return dictService.getDictList(pageSize, pageNum);
+        return dictService.getDictList(pageNum, pageSize);
     }
 
     @GetMapping("/export")

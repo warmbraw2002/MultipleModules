@@ -63,11 +63,11 @@ public class DictDetailController {
         return dictDetailService.deleteDictDetailById(id);
     }
 
-    @GetMapping("/{pageSize}/{pageNum}")
+    @GetMapping("/{pageNum}/{pageSize}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Log(operModule = "字典详情管理",operType = "查询",operDesc = "分页查询字典详情")
     @ApiOperation(value = "分页查询字典详情")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
-        return dictDetailService.getDictDetailList(pageSize, pageNum);
+        return dictDetailService.getDictDetailList(pageNum, pageSize);
     }
 }
