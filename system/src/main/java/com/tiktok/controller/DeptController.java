@@ -25,7 +25,7 @@ public class DeptController {
     private DeptService deptService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DeptQuery')")
     @Log(operModule = "部门管理",operType = "查询",operDesc = "根据id查询部门")
     @ApiOperation(value = "根据id查询部门")
     public Result<Dept> getById(@PathVariable("id") Long id) {
@@ -33,7 +33,7 @@ public class DeptController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DeptEdit')")
     @Log(operModule = "部门管理",operType = "新增",operDesc = "新增部门")
     @ApiOperation(value = "新增部门")
     public Result<Boolean> add(@RequestBody @Valid Dept dept, BindingResult errors) {
@@ -44,7 +44,7 @@ public class DeptController {
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DeptEdit')")
     @Log(operModule = "部门管理",operType = "修改",operDesc = "修改部门")
     @ApiOperation(value = "修改部门")
     public Result<Boolean> update(@RequestBody @Valid Dept dept, BindingResult errors) {
@@ -59,7 +59,7 @@ public class DeptController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DeptEdit')")
     @Log(operModule = "部门管理",operType = "删除",operDesc = "删除部门")
     @ApiOperation(value = "删除部门")
     public Result<Boolean> delete(@PathVariable("id") Long id) {
@@ -67,7 +67,7 @@ public class DeptController {
     }
 
     @GetMapping("/{pageNum}/{pageSize}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DeptQuery')")
     @Log(operModule = "部门管理",operType = "查询",operDesc = "分页查询部门")
     @ApiOperation(value = "分页查询部门")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
@@ -75,7 +75,7 @@ public class DeptController {
     }
 
     @GetMapping("/export")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DeptQuery')")
     @Log(operModule = "部门管理",operType = "导出",operDesc = "导出部门")
     @ApiOperation(value = "导出部门")
     public Result<String> export(HttpServletResponse response) {

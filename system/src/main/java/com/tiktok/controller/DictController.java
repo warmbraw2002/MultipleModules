@@ -26,7 +26,7 @@ public class DictController {
     private DictService dictService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DictQuery')")
     @Log(operModule = "字典管理",operType = "查询",operDesc = "根据id查询字典")
     @ApiOperation(value = "根据id查询字典")
     public Result<Dict> getById(@PathVariable("id") Long id) {
@@ -34,7 +34,7 @@ public class DictController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictEdit')")
     @Log(operModule = "字典管理",operType = "新增",operDesc = "新增字典")
     @ApiOperation(value = "新增字典")
     public Result<Boolean> add(@RequestBody @Valid Dict dict, BindingResult errors) {
@@ -45,7 +45,7 @@ public class DictController {
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictEdit')")
     @Log(operModule = "字典管理",operType = "修改",operDesc = "修改字典")
     @ApiOperation(value = "修改字典")
     public Result<Boolean> update(@RequestBody @Valid Dict dict, BindingResult errors) {
@@ -60,7 +60,7 @@ public class DictController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictEdit')")
     @Log(operModule = "字典管理",operType = "删除",operDesc = "删除字典")
     @ApiOperation(value = "删除字典")
     public Result<Boolean> delete(@PathVariable("id") Long id) {
@@ -68,7 +68,7 @@ public class DictController {
     }
 
     @GetMapping("/{pageNum}/{pageSize}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DictQuery')")
     @Log(operModule = "字典管理",operType = "查询",operDesc = "分页查询字典")
     @ApiOperation(value = "分页查询字典")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
@@ -76,7 +76,7 @@ public class DictController {
     }
 
     @GetMapping("/export")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DictQuery')")
     @Log(operModule = "字典管理",operType = "导出",operDesc = "导出字典")
     @ApiOperation(value = "导出字典")
     public Result<String> export(HttpServletResponse response) {
