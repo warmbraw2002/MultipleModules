@@ -19,6 +19,7 @@ public interface DictMapper {
     Dict findDictById(Long dictId);
 
     @InsertProvider(type = DictProvider.class, method = "insertSQL")
+    @Options(useGeneratedKeys = true, keyProperty = "dictId", keyColumn = "dict_id")
     int insertDict(Dict dict);
 
     @UpdateProvider(type = DictProvider.class, method = "updateSQL")

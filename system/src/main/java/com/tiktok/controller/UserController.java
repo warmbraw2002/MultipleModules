@@ -1,13 +1,11 @@
 package com.tiktok.controller;
 
 
-import com.tiktok.ErrorEnum;
-import com.tiktok.OperationLogType;
-import com.tiktok.Result;
-import com.tiktok.ServiceException;
+import com.tiktok.*;
 import com.tiktok.annotation.Log;
 import com.tiktok.domain.User;
 import com.tiktok.service.JwtAuthService;
+import com.tiktok.service.UserService;
 import com.tiktok.utils.AgentUtil;
 import com.tiktok.utils.RedisUtil;
 import io.swagger.annotations.Api;
@@ -15,10 +13,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.DigestUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
@@ -32,6 +32,9 @@ public class UserController {
 
     @Autowired
     private JwtAuthService jwtAuthService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login/{code}")
     @Log(operModule = "用户操作-登录",operType = OperationLogType.LOGIN,operDesc = "用户登录")
@@ -56,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "获取用户名")
     @Log(operModule = "用户操作-获取用户名",operType = OperationLogType.QUERY,operDesc = "获取用户名")
     public String currentUserName(Principal principal) {
@@ -65,7 +68,7 @@ public class UserController {
 
     @GetMapping("/logout")
     @Log(operModule = "用户操作-登出",operType = OperationLogType.LOGOUT,operDesc = "用户登出")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "用户登出")
     public Result logout(HttpServletRequest request, Principal principal) {
         String token = request.getHeader("Authorization");
@@ -76,25 +79,63 @@ public class UserController {
         return Result.of("登出成功");
     }
 
-//    @PostMapping("/logintest/{username}/{password}")
-//    //@Log(operModule = "用户操作-登录",operType = OperationLogType.LOGIN,operDesc = "用户登录")
-//    public Result login(HttpServletRequest request, @PathVariable String username, @PathVariable String password) {
-//        //String key = getCaptchaKey(request);
-//        //String captcha = (String) redisUtil.get(key);
-//        String token = jwtAuthService.login(username, password);
-//        String redisKey = username+":token";
-//        if (redisUtil.hasKey(redisKey)) {
-//            redisUtil.del(redisKey);
-//        }
-//        redisUtil.set(redisKey, token, 240);
-//        return Result.of(token);
-//    }
+    @GetMapping("/search/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-查询用户",operType = OperationLogType.QUERY,operDesc = "查询用户")
+    @ApiOperation(value = "查询用户")
+    public Result<User> searchUser(@PathVariable String username) {
+        return userService.getUserByName(username);
+    }
 
-//    @GetMapping
-//    public String test() {
-//        return "test";
-//    }
+    @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-新增用户",operType = OperationLogType.ADD,operDesc = "新增用户")
+    @ApiOperation(value = "新增用户")
+    public Result<Boolean> addUser(@RequestBody User user, BindingResult errors) {
+        if (errors.hasErrors()) {
+            return Result.of(null, errors.getFieldError().getDefaultMessage());
+        }
+        return userService.insertUser(user);
+    }
 
+    @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-修改用户",operType = OperationLogType.MODIFY,operDesc = "修改用户")
+    @ApiOperation(value = "修改用户")
+    public Result<Boolean> updateUser(@RequestBody User user, BindingResult errors) {
+        if (errors.hasErrors()) {
+            return Result.of(null, errors.getFieldError().getDefaultMessage());
+        }
+        try {
+            return userService.updateUser(user);
+        } catch (Exception e) {
+            return Result.error(ErrorEnum.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-删除用户",operType = OperationLogType.DELETE,operDesc = "删除用户")
+    @ApiOperation(value = "删除用户")
+    public Result<Boolean> deleteUser(@PathVariable String username) {
+        return userService.deleteUserByName(username);
+    }
+
+    @GetMapping("/export")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-导出用户",operType = OperationLogType.QUERY,operDesc = "导出用户")
+    @ApiOperation(value = "导出用户")
+    public Result<String> exportUser(HttpServletResponse response) {
+        return userService.exportUserList(response);
+    }
+
+    @GetMapping("/page/{pageNum}/{pageSize}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Log(operModule = "用户操作-分页查询用户",operType = OperationLogType.QUERY,operDesc = "分页查询用户")
+    @ApiOperation(value = "分页查询用户")
+    public Result<PageVo> getUserByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
+        return userService.getUserList(pageNum, pageSize);
+    }
     private String getCaptchaKey(HttpServletRequest request) {
         String ip = AgentUtil.getIpAddr(request);
         String userAgent = request.getHeader("User-Agent");

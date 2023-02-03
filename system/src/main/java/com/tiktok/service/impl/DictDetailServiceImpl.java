@@ -69,8 +69,8 @@ public class DictDetailServiceImpl implements DictDetailService {
     }
 
     @Override
-    public Result<PageVo> getDictDetailList(Integer pageSize, Integer pageNum) {
-        PageVo pageVo = new PageVo(pageSize, pageNum);
+    public Result<PageVo> getDictDetailList(Integer pageNum, Integer pageSize) {
+        PageVo pageVo = new PageVo(pageNum, pageSize);
         PageUtil.startPage(pageVo);
         List<DictDetail> dictDetailList = dictDetailMapper.findAllDictDetail();
         return Result.of(PageUtil.endPage(pageVo, dictDetailList));

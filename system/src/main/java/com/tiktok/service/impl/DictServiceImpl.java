@@ -51,8 +51,8 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
-    public Result<PageVo> getDictList(Integer pageSize, Integer pageNum) {
-        PageVo pageVo = new PageVo(pageSize, pageNum);
+    public Result<PageVo> getDictList(Integer pageNum, Integer pageSize) {
+        PageVo pageVo = new PageVo(pageNum, pageSize);
         PageUtil.startPage(pageVo);
         List<Dict> dictList = dictMapper.findAllDict();
         return Result.of(PageUtil.endPage(pageVo, dictList));

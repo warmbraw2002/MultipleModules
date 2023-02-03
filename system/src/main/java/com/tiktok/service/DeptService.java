@@ -12,6 +12,6 @@ public interface DeptService {
     Result<Boolean> insertDept(Dept dept);
     Result<Boolean> updateDept(Dept dept) throws Exception;
     Result<Boolean> deleteDeptById(Long deptId);
-    Result<PageVo> getDeptList(Integer pageSize, Integer pageNum);
+    Result<PageVo> getDeptList(Integer pageNum, Integer pageSize);
     List<Dept> getDeptList();
 }
