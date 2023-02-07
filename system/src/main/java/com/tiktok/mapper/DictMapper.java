@@ -29,6 +29,6 @@ public interface DictMapper {
     int deleteDictById(Long dictId);
 
     @SelectProvider(type = DictProvider.class, method = "selectAllSQL")
-    @ResultMap("deptMap")
+    @ResultMap("dictMap")
     List<Dict> findAllDict();
 }

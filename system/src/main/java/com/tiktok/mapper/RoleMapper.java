@@ -38,6 +38,6 @@ public interface RoleMapper {
     @ResultMap("roleMap")
     List<Role> findRoleByUserId(Long userId);
 
-    @UpdateProvider(type = MenuProvider.class, method = "updatePermissionSQL")
+    @UpdateProvider(type = RoleProvider.class, method = "updatePermissionSQL")
     int updatePermission(Long menuId, String permission);
 }
