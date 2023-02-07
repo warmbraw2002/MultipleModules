@@ -22,7 +22,7 @@ public class DictDetailController {
     private DictDetailService dictDetailService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DictDetailQuery')")
     @Log(operModule = "字典详情管理",operType = "查询",operDesc = "根据id查询字典详情")
     @ApiOperation(value = "根据id查询字典详情")
     public Result<DictDetail> getById(@PathVariable("id") Long id) {
@@ -30,7 +30,7 @@ public class DictDetailController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictDetailEdit')")
     @Log(operModule = "字典详情管理",operType = "新增",operDesc = "新增字典详情")
     @ApiOperation(value = "新增字典详情")
     public Result<Boolean> add(@RequestBody @Valid DictDetail dictDetail, BindingResult errors) {
@@ -41,7 +41,7 @@ public class DictDetailController {
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictDetailEdit')")
     @Log(operModule = "字典详情管理",operType = "修改",operDesc = "修改字典详情")
     @ApiOperation(value = "修改字典详情")
     public Result<Boolean> update(@RequestBody @Valid DictDetail dictDetail, BindingResult errors) {
@@ -56,7 +56,7 @@ public class DictDetailController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('DictDetailEdit')")
     @Log(operModule = "字典详情管理",operType = "删除",operDesc = "删除字典详情")
     @ApiOperation(value = "删除字典详情")
     public Result<Boolean> delete(@PathVariable("id") Long id) {
@@ -64,7 +64,7 @@ public class DictDetailController {
     }
 
     @GetMapping("/{pageNum}/{pageSize}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('DictDetailQuery')")
     @Log(operModule = "字典详情管理",operType = "查询",operDesc = "分页查询字典详情")
     @ApiOperation(value = "分页查询字典详情")
     public Result<PageVo> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNum") Integer pageNum) {
