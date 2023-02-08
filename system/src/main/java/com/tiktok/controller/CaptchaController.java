@@ -3,9 +3,11 @@ package com.tiktok.controller;
 import com.tiktok.ErrorEnum;
 import com.tiktok.Result;
 import com.tiktok.ServiceException;
+import com.tiktok.annotation.Log;
 import com.tiktok.utils.AgentUtil;
 import com.tiktok.utils.RedisUtil;
 import com.wf.captcha.SpecCaptcha;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,8 @@ public class CaptchaController {
     private RedisUtil redisUtil;
 
     @GetMapping("send")
+    @Log(operModule = "验证码",operType = "查询",operDesc = "获取验证码")
+    @ApiOperation(value = "获取验证码")
     public Result captcha(HttpServletRequest request) {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String code = specCaptcha.text().toLowerCase();
@@ -32,6 +36,8 @@ public class CaptchaController {
     }
 
     @GetMapping("verify/{code}")
+    @Log(operModule = "验证码",operType = "查询",operDesc = "检验验证码")
+    @ApiOperation(value = "检验验证码")
     public Result verify(HttpServletRequest request, @PathVariable String code) {
         String key = getCaptchaKey(request);
         String captcha = (String) redisUtil.get(key);
