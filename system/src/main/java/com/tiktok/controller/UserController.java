@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userQuery')")
     @ApiOperation(value = "获取用户名")
     @Log(operModule = "用户操作-获取用户名",operType = OperationLogType.QUERY,operDesc = "获取用户名")
     public String currentUserName(Principal principal) {
@@ -68,7 +68,7 @@ public class UserController {
 
     @GetMapping("/logout")
     @Log(operModule = "用户操作-登出",operType = OperationLogType.LOGOUT,operDesc = "用户登出")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userQuery')")
     @ApiOperation(value = "用户登出")
     public Result logout(HttpServletRequest request, Principal principal) {
         String token = request.getHeader("Authorization");
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping("/search/{username}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userQuery')")
     @Log(operModule = "用户操作-查询用户",operType = OperationLogType.QUERY,operDesc = "查询用户")
     @ApiOperation(value = "查询用户")
     public Result<User> searchUser(@PathVariable String username) {
@@ -88,7 +88,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userEdit')")
     @Log(operModule = "用户操作-新增用户",operType = OperationLogType.ADD,operDesc = "新增用户")
     @ApiOperation(value = "新增用户")
     public Result<Boolean> addUser(@RequestBody User user, BindingResult errors) {
@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userEdit')")
     @Log(operModule = "用户操作-修改用户",operType = OperationLogType.MODIFY,operDesc = "修改用户")
     @ApiOperation(value = "修改用户")
     public Result<Boolean> updateUser(@RequestBody User user, BindingResult errors) {
@@ -114,7 +114,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{username}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userEdit')")
     @Log(operModule = "用户操作-删除用户",operType = OperationLogType.DELETE,operDesc = "删除用户")
     @ApiOperation(value = "删除用户")
     public Result<Boolean> deleteUser(@PathVariable String username) {
@@ -122,7 +122,7 @@ public class UserController {
     }
 
     @GetMapping("/export")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userQuery')")
     @Log(operModule = "用户操作-导出用户",operType = OperationLogType.QUERY,operDesc = "导出用户")
     @ApiOperation(value = "导出用户")
     public Result<String> exportUser(HttpServletResponse response) {
@@ -130,7 +130,7 @@ public class UserController {
     }
 
     @GetMapping("/page/{pageNum}/{pageSize}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('userQuery')")
     @Log(operModule = "用户操作-分页查询用户",operType = OperationLogType.QUERY,operDesc = "分页查询用户")
     @ApiOperation(value = "分页查询用户")
     public Result<PageVo> getUserByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
