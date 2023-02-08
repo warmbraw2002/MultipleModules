@@ -24,7 +24,7 @@ public class MenuController {
     private MenuService menuService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('MenuEdit')")
     @Log(operModule = "菜单管理",operType = "新增",operDesc = "新增菜单")
     @ApiOperation(value = "新增菜单")
     public Result add(@RequestBody Menu menu) {
@@ -32,7 +32,7 @@ public class MenuController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('MenuQuery')")
     @Log(operModule = "菜单管理",operType = "查询",operDesc = "根据id查询菜单")
     @ApiOperation(value = "根据id查询菜单")
     public Result getById(@PathVariable("id") Long id) {
@@ -40,7 +40,7 @@ public class MenuController {
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('MenuEdit')")
     @Log(operModule = "菜单管理",operType = "修改",operDesc = "修改菜单")
     @ApiOperation(value = "修改菜单")
     public Result update(@RequestBody Menu menu) throws Exception {
@@ -48,7 +48,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('MenuEdit')")
     @Log(operModule = "菜单管理",operType = "删除",operDesc = "根据id删除菜单")
     @ApiOperation(value = "删除菜单")
     public Result delete(@PathVariable("id") Long id) {
@@ -56,7 +56,7 @@ public class MenuController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('MenuQuery')")
     @Log(operModule = "菜单管理",operType = "查询",operDesc = "查询所有菜单")
     @ApiOperation(value = "查询所有菜单")
     public Result getAll() {
@@ -64,7 +64,7 @@ public class MenuController {
     }
 
     @GetMapping("/sub/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('MenuQuery')")
     @Log(operModule = "菜单管理",operType = "查询",operDesc = "根据菜单id获取所有子菜单")
     @ApiOperation(value = "根据菜单id获取所有子菜单")
     public Result getSubmenu(@PathVariable("id") Long id) {
@@ -72,7 +72,7 @@ public class MenuController {
     }
 
     @GetMapping("/peer/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('MenuQuery')")
     @Log(operModule = "菜单管理",operType = "查询",operDesc = "根据菜单id获取所有同级菜单")
     @ApiOperation(value = "根据菜单id获取所有同级菜单")
     public Result getPeerMenu(@PathVariable("id") Long id) {
@@ -80,7 +80,7 @@ public class MenuController {
     }
 
     @GetMapping("/parent/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('MenuQuery')")
     @Log(operModule = "菜单管理",operType = "查询",operDesc = "根据菜单id获取所有上级菜单")
     @ApiOperation(value = "根据菜单id获取所有上级菜单")
     public Result getParentMenu(@PathVariable("id") Long id) {
